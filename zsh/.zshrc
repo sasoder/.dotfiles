@@ -29,4 +29,4 @@ function random_emoji {
 
 # Modify the prompt to include random emoji
 PROMPT='${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}%B%F{142}%n%F{white}@%F{130}%m%b%F{white}:%F{107}%B%~%b%F{white}
-$(random_emoji) '
+    $(random_emoji) '
