@@ -1,8 +1,20 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
 - clean: ['~']
 
 - link:
+    # SSH config (keeping existing setup)
     ~/.ssh/config:
         path: ssh/config
         create: true
+    
+    # Wezterm config (goes directly in home directory)
+    ~/.wezterm.lua: wezterm/.wezterm.lua
+    
+    # ZSH config
+    ~/.zshrc: zsh/.zshrc
 
 
