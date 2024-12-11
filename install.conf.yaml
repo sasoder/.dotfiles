@@ -17,4 +17,7 @@
     # ZSH config
     ~/.zshrc: zsh/.zshrc
 
+    # aerospace config
+    ~/.aerospace.toml: aerospace/aerospace.toml
+
 
