@@ -79,7 +79,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Array of mystical/nature emojis
-EMOJIS=(🔮 ✨ 💫 🍄 🌙 🪴 🐖 🦋 🕊️ 🌸 🎭 🌊 🔱 🪞)
+EMOJIS=(🔮 ✨ 💫 🍄 🌙 🪴 🐖 🌸 🌊 🪞)
 
 # Function to get a random emoji
 function random_emoji {
