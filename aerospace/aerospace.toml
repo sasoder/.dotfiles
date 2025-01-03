@@ -63,6 +63,12 @@ outer.bottom =     5
 outer.top =        5
 outer.right =      5
 
+[workspace-to-monitor-force-assignment]
+# Assign QWE workspaces to the monitor above
+Q = 'secondary'
+W = 'secondary'
+E = 'secondary'
+
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
@@ -117,6 +123,8 @@ alt-shift-n = 'resize smart -50'
 alt-shift-m = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+
+# All other workspaces (A,S,D,Z,X) will default to main monitor
 alt-q = 'workspace Q'
 alt-w = 'workspace W'
 alt-e = 'workspace E'
