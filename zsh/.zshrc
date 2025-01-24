@@ -87,7 +87,7 @@ function random_emoji {
 }
 
 # Modify the prompt to include random emoji
-PROMPT='${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}%F{white}[%*]%f %B%F{white}%n@%m%b%F{white}:%F{blue}%B%~%b%F{white}
+PROMPT='${debian_chroot:+($debian_chroot)─}%F{white}[%*]%f %B%F{white}%n@%m%b%F{white}:%F{blue}%B%~%b%F{white}
 $(random_emoji) '
 
 # my beloved fzf
@@ -108,3 +108,7 @@ export FZF_CTRL_R_OPTS="
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH=$PATH:/Users/evidence/.spicetify
+export PATH="/Applications/Spotify.app/Contents/MacOS:$PATH"
+
