@@ -112,3 +112,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=$PATH:/Users/evidence/.spicetify
 export PATH="/Applications/Spotify.app/Contents/MacOS:$PATH"
 
+alias hehe="source .venv/bin/activate"
+ghub() {
+    cd ~/Documents/GitHub/ && ls
+}
