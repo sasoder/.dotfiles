@@ -78,8 +78,25 @@ plugins=(git)
 # Source Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
+# Set default directory
+# Initialize default directory only on first launch
+if [ "$PWD" = "$HOME" ]; then
+    cd ~/Documents/Github
+fi
+
+# Set up chpwd to remember last directory
+function chpwd() {
+    pwd > ~/.last_dir
+}
+
+# On new splits/windows, go to last known directory
+if [ -f ~/.last_dir ]; then
+    cd "$(cat ~/.last_dir)"
+fi
+
+
 # Array of mystical/nature emojis
-EMOJIS=(🔮 ✨ 💫 🍄 🌙 🪴 🐖 🌸 🌊 🪞)
+EMOJIS=(🔮 ✨ 🌕 🍄 🌙 🐖 🌸 🌊 🌋 🦕 ☄️ 🌍 🪐)
 
 # Function to get a random emoji
 function random_emoji {

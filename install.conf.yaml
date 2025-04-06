@@ -3,21 +3,22 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     # SSH config (keeping existing setup)
     ~/.ssh/config:
-        path: ssh/config
-        create: true
-    
+      path: ssh/config
+      create: true
+
     # Wezterm config (goes directly in home directory)
     ~/.wezterm.lua: wezterm/.wezterm.lua
-    
+
     # ZSH config
     ~/.zshrc: zsh/.zshrc
 
     # aerospace config
     ~/.aerospace.toml: aerospace/aerospace.toml
 
-
+    # Ghostty config
+    ~/.config/ghostty/config: ghostty/config

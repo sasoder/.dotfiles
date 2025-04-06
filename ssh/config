@@ -1,7 +1,12 @@
 Include /Users/evidence/.colima/ssh_config
 
 Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
 
+Host student-shell
+    HostName student-shell.sys.kth.se
+    User sasoder
+    PreferredAuthentications gssapi-with-mic
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
