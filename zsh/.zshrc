@@ -7,42 +7,6 @@ export TERM="xterm-256color"
 
 print -P "%F{white}"
 
-# cat << 'EOF'
-#                _                       __
-#               /   \                  /      \
-#              '      \              /          \
-#             |       |Oo          o|            |
-#             `    \  |OOOo......oOO|   /        |
-#              `    \\OOOOOOOOOOOOOOO\//        /
-#                \ _o\OOOOOOOOOOOOOOOO//. ___ /
-#            ______OOOOOOOOOOOOOOOOOOOOOOOo.___
-#             --- OO'* `OOOOOOOOOO'*  `OOOOO--
-#                 OO.   OOOOOOOOO'    .OOOOO o
-#                 `OOOooOOOOOOOOOooooOOOOOO'OOOo
-#               .OO "OOOOOOOOOOOOOOOOOOOO"OOOOOOOo
-#           __ OOOOOO`OOOOOOOOOOOOOOOO"OOOOOOOOOOOOo
-#          ___OOOOOOOO_"OOOOOOOOOOO"_OOOOOOOOOOOOOOOO
-#            OOOOO^OOOO0`(____)/"OOOOOOOOOOOOO^OOOOOO
-#            OOOOO OO000/000000\000000OOOOOOOO OOOOOO
-#            OOOOO O0000000000000000 ppppoooooOOOOOO
-#            `OOOOO 0000000000000000 QQQQ "OOOOOOO"
-#             o"OOOO 000000000000000oooooOOoooooooO'
-#             OOo"OOOO.00000000000000000000OOOOOOOO'
-#            OOOOOO QQQQ 0000000000000000000OOOOOOO
-#           OOOOOO00eeee00000000000000000000OOOOOOOO.
-#          OOOOOOOO000000000000000000000000OOOOOOOOOO
-#          OOOOOOOOO00000000000000000000000OOOOOOOOOO
-#          `OOOOOOOOO000000000000000000000OOOOOOOOOOO
-#            "OOOOOOOO0000000000000000000OOOOOOOOOOO'
-#              "OOOOOOO00000000000000000OOOOOOOOOO"
-#   .ooooOOOOOOOo"OOOOOOO000000000000OOOOOOOOOOO"
-# .OOO"""""""""".oOOOOOOOOOOOOOOOOOOOOOOOOOOOOo
-# OOO         QQQQO"'                     `"QQQQ
-# OOO
-# `OOo.
-#   `"OOOOOOOOOOOOoooooooo.
-# EOF
-
 print -P "%F{210}"
 
 # print date, time, and day of the week, in a pretty format with a crystal ball emoji
@@ -50,7 +14,7 @@ cat << EOF
     $(date +%A) $(date +%d) $(date +%B) $(date +%Y) $(date +%H:%M)
 EOF
 
-print -P "%F{223}"
+print -P "%F{217}"
 cat << 'EOF'
            __,---.__
         ,-'         `-.__
@@ -84,15 +48,6 @@ if [ "$PWD" = "$HOME" ]; then
     cd ~/Documents/Github
 fi
 
-# Set up chpwd to remember last directory
-function chpwd() {
-    pwd > ~/.last_dir
-}
-
-# On new splits/windows, go to last known directory
-if [ -f ~/.last_dir ]; then
-    cd "$(cat ~/.last_dir)"
-fi
 
 
 # Array of mystical/nature emojis
@@ -133,3 +88,5 @@ alias hehe="source .venv/bin/activate"
 ghub() {
     cd ~/Documents/GitHub/ && ls
 }
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
