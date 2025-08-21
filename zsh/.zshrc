@@ -3,18 +3,25 @@ export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
 
 # a pretty welcome message
-# echo "🔮 ✨ 💫 🍄 🌙 🪴 🐖 🦋 🕊️ 🌸 🎭 🌊 🔱 🪞"
+# echo "🔮 🍄 🌙 🪴 🐖 🕊️ 🌸 🌊 🪞"
 
-print -P "%F{white}"
+# Theme palette colors (no OS detection; palette adapts with your terminal theme)
+: ${DOT_PRIMARY:=blue}
+: ${DOT_ACCENT:=magenta}
+: ${DOT_NEUTRAL_INDEX:=8}
 
-print -P "%F{210}"
+PRIMARY_COLOR="$DOT_PRIMARY"
+ACCENT_COLOR="$DOT_ACCENT"
+NEUTRAL_COLOR_INDEX="$DOT_NEUTRAL_INDEX"
 
-# print date, time, and day of the week, in a pretty format with a crystal ball emoji
+print -P "%F{$NEUTRAL_COLOR_INDEX}"
+
+# print date, time, and day of the week
 cat << EOF
     $(date +%A) $(date +%d) $(date +%B) $(date +%Y) $(date +%H:%M)
 EOF
 
-print -P "%F{217}"
+print -P "%F{$DOT_NEUTRAL_INDEX}"
 cat << 'EOF'
            __,---.__
         ,-'         `-.__
@@ -34,7 +41,7 @@ EOF
 
 print -P "%F{reset}"
 # Set theme
-ZSH_THEME="bira"
+ZSH_THEME="robbyrussell"
 
 # Basic plugins
 plugins=(git)
@@ -51,16 +58,17 @@ fi
 
 
 # Array of mystical/nature emojis
-EMOJIS=(🔮 ✨ 🌕 🍄 🌙 🐖 🌸 🌊 🌋 🦕 ☄️ 🌍 🪐)
+EMOJIS=(🔮 🍄 🐖 🌸 🦕 🌍)
 
 # Function to get a random emoji
 function random_emoji {
-    echo ${EMOJIS[$RANDOM % ${#EMOJIS[@]} + 1]}
+    print -nr -- ${EMOJIS[$RANDOM % ${#EMOJIS[@]} + 1]}
 }
 
-# Modify the prompt to include random emoji
-PROMPT='${debian_chroot:+($debian_chroot)─}%F{white}[%*]%f %B%F{white}%n@%m%b%F{white}:%F{blue}%B%~%b%F{white}
-$(random_emoji) '
+# enable command substitution in prompt and set custom prompt
+setopt prompt_subst
+PROMPT='%B%F{${NEUTRAL_COLOR_INDEX}}%/%f $(git_prompt_info)%b
+%F{${ACCENT_COLOR}}$(random_emoji)%f '
 
 # my beloved fzf
 source <(fzf --zsh)
@@ -90,3 +98,24 @@ ghub() {
 }
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# opencode
+export PATH=/Users/evidence/.opencode/bin:$PATH
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# zsh-syntax-highlighting: make valid commands white, unknown tokens red
+typeset -gA ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+ZSH_HIGHLIGHT_STYLES[command]='fg=white'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=white'
+ZSH_HIGHLIGHT_STYLES[function]='fg=white'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=white'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=white'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=white'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=white'

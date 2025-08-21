@@ -1,9 +1,8 @@
-background-opacity = 0.8
-background-blur-radius = 25
-font-family = "JetBrains Mono"
+background-opacity = 0.87
+background-blur-radius = 50
+font-family = "Iosevka Term Curly Extended"
 font-size = 13
-font-thicken = true
-theme = "light:Arthur,dark:Everforest Dark - Hard"
+theme = "light:Smyck,dark:ayu"
 cursor-click-to-move = true
 shell-integration-features = no-cursor
 cursor-style = block
