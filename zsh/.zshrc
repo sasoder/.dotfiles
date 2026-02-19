@@ -123,5 +123,4 @@ export TMPDIR="$HOME/tmp"
 
 # Added by Antigravity
 export PATH="/Users/evidence/.antigravity/antigravity/bin:$PATH"
-export CIVITAI_TOKEN="REDACTED"
 export PATH="$HOME/.local/bin:$PATH"
