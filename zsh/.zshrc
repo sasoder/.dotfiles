@@ -119,3 +119,9 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=white'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=white'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=white'
 ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=white'
+export TMPDIR="$HOME/tmp"
+
+# Added by Antigravity
+export PATH="/Users/evidence/.antigravity/antigravity/bin:$PATH"
+export CIVITAI_TOKEN="REDACTED"
+export PATH="$HOME/.local/bin:$PATH"
