@@ -68,6 +68,7 @@ outer.right =      5
 Q = 'secondary'
 W = 'secondary'
 E = 'secondary'
+L = 'secondary'
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -107,13 +108,11 @@ alt-comma = 'layout accordion horizontal vertical'
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
-alt-l = 'focus right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'
 alt-shift-j = 'move down'
 alt-shift-k = 'move up'
-alt-shift-l = 'move right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-n = 'resize smart -200'
@@ -140,6 +139,8 @@ alt-c = 'workspace C'
 alt-z = 'workspace Z'
 alt-x = 'workspace X'
 
+alt-l = 'workspace L'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-q = ['move-node-to-workspace Q', 'workspace Q']
 alt-shift-w = ['move-node-to-workspace W', 'workspace W']
@@ -155,6 +156,8 @@ alt-shift-c = ['move-node-to-workspace C', 'workspace C']
 
 alt-shift-z = ['move-node-to-workspace Z', 'workspace Z']
 alt-shift-x = ['move-node-to-workspace X', 'workspace X']
+
+alt-shift-l = ['move-node-to-workspace L', 'workspace L']
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
