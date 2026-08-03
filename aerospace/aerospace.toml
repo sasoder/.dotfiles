@@ -69,6 +69,7 @@ Q = 'secondary'
 W = 'secondary'
 E = 'secondary'
 L = 'secondary'
+O = 'secondary'
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -140,6 +141,7 @@ alt-z = 'workspace Z'
 alt-x = 'workspace X'
 
 alt-l = 'workspace L'
+alt-o = 'workspace O'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-q = ['move-node-to-workspace Q', 'workspace Q']
@@ -158,6 +160,7 @@ alt-shift-z = ['move-node-to-workspace Z', 'workspace Z']
 alt-shift-x = ['move-node-to-workspace X', 'workspace X']
 
 alt-shift-l = ['move-node-to-workspace L', 'workspace L']
+alt-shift-o = ['move-node-to-workspace O', 'workspace O']
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
