@@ -64,10 +64,12 @@ outer.top =        5
 outer.right =      5
 
 [workspace-to-monitor-force-assignment]
-# Assign QWE workspaces to the monitor above
+# Assign top-row workspaces to the monitor above
 Q = 'secondary'
 W = 'secondary'
 E = 'secondary'
+R = 'secondary'
+T = 'secondary'
 L = 'secondary'
 O = 'secondary'
 
@@ -124,7 +126,7 @@ alt-shift-m = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 
-# All other workspaces (A,S,D,Z,X) will default to main monitor
+# All other workspaces (A,S,D,F,B,C,Z,X) will default to main monitor
 alt-q = 'workspace Q'
 alt-w = 'workspace W'
 alt-e = 'workspace E'
@@ -135,6 +137,7 @@ alt-a = 'workspace A'
 alt-s = 'workspace S'
 alt-d = 'workspace D'
 alt-f = 'workspace F'
+alt-b = 'workspace B'
 alt-c = 'workspace C'
 
 alt-z = 'workspace Z'
@@ -154,6 +157,7 @@ alt-shift-a = ['move-node-to-workspace A', 'workspace A']
 alt-shift-s = ['move-node-to-workspace S', 'workspace S']
 alt-shift-d = ['move-node-to-workspace D', 'workspace D']
 alt-shift-f = ['move-node-to-workspace F', 'workspace F']
+alt-shift-b = ['move-node-to-workspace B', 'workspace B']
 alt-shift-c = ['move-node-to-workspace C', 'workspace C']
 
 alt-shift-z = ['move-node-to-workspace Z', 'workspace Z']
