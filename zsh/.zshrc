@@ -93,6 +93,10 @@ export PATH=$PATH:/Users/evidence/.spicetify
 export PATH="/Applications/Spotify.app/Contents/MacOS:$PATH"
 
 alias hehe="source .venv/bin/activate"
+alias gc="git checkout"
+alias gp="git pull"
+alias gf="git fetch"
+
 ghub() {
     cd ~/Documents/GitHub/ && ls
 }
