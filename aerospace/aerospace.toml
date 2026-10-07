@@ -14,6 +14,20 @@ after-startup-command = []
 # Start AeroSpace at login
 start-at-login = true
 
+# AeroSpace doesn't restore window-to-workspace assignments after a reboot.
+# Give reopened apps predictable homes instead. These apply at startup and
+# whenever a new window appears; existing windows can still be moved freely.
+# This restores app workspaces, not the previous tiling layout or window sizes.
+on-window-detected = [
+    { if.app-id = 'app.zen-browser.zen', run = 'move-node-to-workspace A' },
+    { if.app-id = 'com.openai.codex', run = 'move-node-to-workspace S' },
+    { if.app-id = 'com.anthropic.claudefordesktop', run = 'move-node-to-workspace C' },
+    { if.app-id = 'com.mitchellh.ghostty', run = 'move-node-to-workspace W' },
+    { if.app-id = 'com.google.Chrome', run = 'move-node-to-workspace E' },
+    { if.app-id = 'com.tinyspeck.slackmacgap', run = 'move-node-to-workspace Z' },
+    { if.app-id = 'rocks.spotifast.Spotifast', run = 'move-node-to-workspace X' },
+]
+
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
