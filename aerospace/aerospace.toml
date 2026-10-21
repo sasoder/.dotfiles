@@ -46,6 +46,36 @@ run = 'layout floating'
 if = 'test %{window-title} ~= "^(settings|preferences)$"'
 run = 'layout floating'
 
+# AeroSpace forgets which workspace each window was on when it (re)starts.
+# Send these apps home then; windows opened later stay where you are.
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'app.zen-browser.zen' }
+run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'com.openai.codex' }
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'com.anthropic.claudefordesktop' }
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'com.mitchellh.ghostty' }
+run = 'move-node-to-workspace W'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'com.google.Chrome' }
+run = 'move-node-to-workspace E'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'com.tinyspeck.slackmacgap' }
+run = 'move-node-to-workspace Z'
+
+[[on-window-detected]]
+if = { during-aerospace-startup = true, app-id = 'rocks.spotifast.Spotifast' }
+run = 'move-node-to-workspace X'
+
 # Everything else: split the neighbour instead of adding yet another column
 [[on-window-detected]]
 if.during-aerospace-startup = false
