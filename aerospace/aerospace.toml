@@ -9,15 +9,27 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
+# Keyboard focus pulls the cursor into the window (only if it's outside).
+# No focus-follows-mouse: hovering focused the tiles behind a fullscreen window and kicked you out.
+on-focus-changed = ['move-mouse window-lazy-center']
+
 persistent-workspaces = ['Q', 'W', 'E', 'R', 'T', 'A', 'S', 'D', 'F', 'B', 'C', 'Z', 'X', 'L', 'O']
 
+# Focus ring around the focused window (JankyBorders): macOS's own keyboard-focus color
+# (#1AA9FF at 50%), following each window's real corner radius. Here it's built from
+# source into ~/.local/bin because Homebrew won't build it next to Xcode 16.
+after-startup-command = [
+    'exec-and-forget PATH="$HOME/.local/bin:$PATH" borders style=round width=3.0 hidpi=on active_color=0x7f1aa9ff inactive_color=0x00000000',
+]
+
+# 8pt like macOS's own tiling margins, so the 3pt focus ring has room to breathe
 [gaps]
-inner.horizontal = 5
-inner.vertical = 5
-outer.left = 5
-outer.bottom = 5
-outer.top = 5
-outer.right = 5
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
 
 [workspace-to-monitor-force-assignment]
 # Top row + L, O go to the second monitor; everything else falls back to main
@@ -101,21 +113,22 @@ alt-m = 'resize smart +200'
 alt-shift-n = 'resize smart -50'
 alt-shift-m = 'resize smart +50'
 
-alt-q = 'workspace Q'
-alt-w = 'workspace W'
-alt-e = 'workspace E'
-alt-r = 'workspace R'
-alt-t = 'workspace T'
-alt-a = 'workspace A'
-alt-s = 'workspace S'
-alt-d = 'workspace D'
-alt-f = 'workspace F'
-alt-b = 'workspace B'
-alt-c = 'workspace C'
-alt-z = 'workspace Z'
-alt-x = 'workspace X'
-alt-l = 'workspace L'
-alt-o = 'workspace O'
+# Pressing the current workspace's key again jumps back to the previous one
+alt-q = 'workspace --auto-back-and-forth Q'
+alt-w = 'workspace --auto-back-and-forth W'
+alt-e = 'workspace --auto-back-and-forth E'
+alt-r = 'workspace --auto-back-and-forth R'
+alt-t = 'workspace --auto-back-and-forth T'
+alt-a = 'workspace --auto-back-and-forth A'
+alt-s = 'workspace --auto-back-and-forth S'
+alt-d = 'workspace --auto-back-and-forth D'
+alt-f = 'workspace --auto-back-and-forth F'
+alt-b = 'workspace --auto-back-and-forth B'
+alt-c = 'workspace --auto-back-and-forth C'
+alt-z = 'workspace --auto-back-and-forth Z'
+alt-x = 'workspace --auto-back-and-forth X'
+alt-l = 'workspace --auto-back-and-forth L'
+alt-o = 'workspace --auto-back-and-forth O'
 
 alt-shift-q = 'move-node-to-workspace --focus-follows-window Q'
 alt-shift-w = 'move-node-to-workspace --focus-follows-window W'

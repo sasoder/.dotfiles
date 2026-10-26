@@ -123,8 +123,15 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=white'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=white'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=white'
 ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=white'
-export TMPDIR="$HOME/tmp"
 
 # Added by Antigravity
 export PATH="/Users/evidence/.antigravity/antigravity/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/evidence/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/evidence/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/evidence/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/evidence/google-cloud-sdk/completion.zsh.inc'; fi
+
+[ -f "$HOME/.config/braintrust/codex.env" ] && source "$HOME/.config/braintrust/codex.env"
