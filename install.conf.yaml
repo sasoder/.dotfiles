@@ -22,3 +22,14 @@
 
     # Ghostty config
     ~/.config/ghostty/config: ghostty/config
+
+    # mpv (individual entries so ~/.config/mpv/watch_later stays out of the repo)
+    ~/.config/mpv/mpv.conf: mpv/mpv.conf
+    ~/.config/mpv/input.conf: mpv/input.conf
+    ~/.config/mpv/scripts: mpv/scripts
+    ~/.config/mpv/script-opts: mpv/script-opts
+    ~/.config/mpv/fonts: mpv/fonts
+    # Torrent streaming, once installed with: bun add -g webtorrent-mpv-hook
+    ~/.config/mpv/scripts/webtorrent.js:
+      path: ~/.bun/install/global/node_modules/webtorrent-mpv-hook/build/webtorrent.js
+      if: '[ -f ~/.bun/install/global/node_modules/webtorrent-mpv-hook/build/webtorrent.js ]'
