@@ -1438,6 +1438,8 @@ function Menu:render()
 
 		---@type MenuAction|nil
 		local selected_action
+		-- dotfiles: menus with an active item (tracks, chapters) get a checkmark gutter
+		local has_active = itable_find(menu.items, function(item) return item.active end) ~= nil
 		for index = start_index, end_index, 1 do
 			local item = menu.items[index]
 
@@ -1475,14 +1477,14 @@ function Menu:render()
 			local next_item = menu.items[index + 1]
 			local next_is_active = next_item and next_item.active
 			local next_has_background = menu.selected_index == index + 1 or next_is_active
-			local font_color = item.active and fgt or bgt
+			local font_color = bgt -- dotfiles: no inverted text, active rows aren't filled
 			local actions = is_selected and (item.actions or menu.item_actions) -- not nil = actions are visible
 			local action = actions and actions[menu.action_index] -- not nil = action is selected
 
 			if action then selected_action = action end
 
 			-- Separator
-			if item_by < content_rect.by and ((not has_background and not next_has_background) or item.separator) then
+			if item_by < content_rect.by and item.separator then -- dotfiles: only explicit separators
 				local ay, by = item_by, item_by + self.separator_size
 				if has_background then
 					ay, by = ay + self.separator_size, by + self.separator_size
@@ -1496,7 +1498,7 @@ function Menu:render()
 			end
 
 			-- Background
-			local highlight_opacity = 0 + (item.active and 0.8 or 0) + (is_selected and 0.15 or 0)
+			local highlight_opacity = is_selected and 0.08 or 0 -- dotfiles: quiet hover, no active fill
 			if highlight_opacity > 0 then
 				ass:rect(content_rect.ax, item_ay, content_rect.bx, item_by, {
 					radius = state.radius,
@@ -1575,15 +1577,14 @@ function Menu:render()
 				title_clip_bx = actions_rect.ax - self.gap * 2
 			end
 
-			-- Selected item indicator line
-			if is_selected and not selected_action then
-				local size = round(2 * state.scale)
-				local v_padding = math.min(state.radius, math.ceil(self.item_height / 3))
-				ass:rect(
-					content_rect.ax - size - 1, item_ay + v_padding,
-					content_rect.ax - 1, item_by - v_padding,
-					{radius = 1 * state.scale, color = fg, opacity = menu_opacity, clip = item_clip}
-				)
+			-- dotfiles: checkmark instead of the selected-item indicator line
+			if has_active then
+				if item.active then
+					ass:icon(content_ax + icon_size / 2, item_center_y, icon_size * 1.2, 'check', {
+						color = bgt, opacity = menu_opacity, clip = item_clip,
+					})
+				end
+				content_ax = content_ax + icon_size + self.item_padding / 2
 			end
 
 			-- Icon
@@ -1652,7 +1653,7 @@ function Menu:render()
 					italic = item.italic,
 					bold = item.bold,
 					wrap = 2,
-					opacity = menu_opacity * (item.muted and 0.5 or 1),
+					opacity = menu_opacity * ((item.muted or (has_active and not item.active)) and 0.55 or 1),
 					clip = clip,
 				})
 			end

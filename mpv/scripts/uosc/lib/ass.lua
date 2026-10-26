@@ -60,7 +60,7 @@ function ass_mt:txt(x, y, align, value, opts)
 	-- bold
 	if opts.bold or (opts.bold == nil and options.font_bold) then tags = tags .. '\\b1' end
 	-- italic
-	if opts.italic then tags = tags .. '\\i1' end
+	-- dotfiles: italics dropped, the UI fonts have no italic cut
 	-- rotate
 	if opts.rotate then tags = tags .. '\\frz' .. opts.rotate end
 	-- wrap

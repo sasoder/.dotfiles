@@ -1,13 +1,12 @@
 -- Netflix-style "Skip Intro" prompt for opening/credits/recap/preview chapters.
--- ENTER skips while the prompt is visible. `script-binding chapter_skip/toggle-auto`
--- (or uosc's control-bar button) switches to skipping automatically, each chapter
--- once per file so seeking back into it still works.
+-- Click it or press ENTER while it's visible. `script-binding chapter_skip/toggle-auto`
+-- switches to skipping automatically, each chapter once per file so seeking back into
+-- it still works.
 
 local options = {
     auto = false,
     prompt_duration = 8,
-    font = "Avenir Next Demi Bold",
-    accent = "FFEE8C",
+    font = "DIN Alternate",
 }
 require("mp.options").read_options(options, "chapter-skip")
 
@@ -23,8 +22,7 @@ local hide_timer
 local shown_label
 local bottom_margin = 0
 local auto_skipped = {}
-
-local function bgr(rgb) return rgb:sub(5, 6) .. rgb:sub(3, 4) .. rgb:sub(1, 2) end
+local rect, hovered = nil, false -- prompt bounds in OSD pixels, for mouse hover/click
 
 local function kind_of(title)
     title = (title or ""):lower()
@@ -35,42 +33,51 @@ local function kind_of(title)
     end
 end
 
-local function rounded_rect(w, h, r)
+local function capsule(w, h)
+    local r, k = h / 2, h / 2 * 0.5523
     return string.format(
-        "m %d 0 l %d 0 b %d 0 %d 0 %d %d l %d %d b %d %d %d %d %d %d l %d %d b 0 %d 0 %d 0 %d l 0 %d b 0 0 0 0 %d 0",
-        r, w - r, w, w, w, r, w, h - r, w, h, w, h, w - r, h, r, h, h, h, h - r, r, r)
+        "m %.1f 0 l %.1f 0 b %.1f 0 %.1f %.1f %.1f %.1f b %.1f %.1f %.1f %.1f %.1f %.1f l %.1f %.1f " ..
+        "b %.1f %.1f 0 %.1f 0 %.1f b 0 %.1f %.1f 0 %.1f 0",
+        r, w - r, w - r + k, w, r - k, w, r, w, r + k, w - r + k, h, w - r, h, r, h,
+        r - k, h, r + k, r, r - k, r - k, r)
 end
 
+-- Apple TV style glass capsule: white glyph and label, brightens on hover, clickable.
 local function render()
     local dims = mp.get_property_native("osd-dimensions")
     if not shown_label or not dims or dims.h == 0 then return end
 
-    -- Modelled on Netflix/Prime: dark translucent button, thin light border, icon + label.
-    local w, h = math.floor(720 * dims.w / dims.h), 720
+    local w, h = 720 * dims.w / dims.h, 720
+    local px = mp.get_property_number("display-hidpi-scale", 1) * h / dims.h
     local text = "Skip " .. shown_label
-    local fs, pad = 20, 16
-    local text_w = math.floor(#text * fs * 0.5)
-    local key_w, key_h = 46, 20
-    local bw, bh = pad + 16 + 10 + text_w + 14 + key_w + pad, 42
-    local x = w - 32 - bw
-    local y = h - math.floor(bottom_margin * h) - 28 - bh
-    local accent = bgr(options.accent)
+    local fs, pad, icon = 17 * px, 20 * px, 11 * px
+    local bw, bh = pad + icon * 1.6 + 10 * px + #text * fs * 0.52 + pad, 44 * px
+    local x = w - 24 * px - bw
+    local y = h - bottom_margin * h - 18 * px - bh
+    rect = { x = x * dims.h / h, y = y * dims.h / h, w = bw * dims.h / h, h = bh * dims.h / h }
 
     overlay.res_x, overlay.res_y = w, h
     overlay.data = table.concat({
-        string.format("{\\an7\\pos(%d,%d)\\bord1\\shad0\\1c&H141414&\\1a&H38&\\3c&HFFFFFF&\\3a&HA0&\\p1}%s{\\p0}",
-            x, y, rounded_rect(bw, bh, 6)),
-        -- fast-forward icon
-        string.format("{\\an7\\pos(%d,%d)\\bord0\\shad0\\1c&H%s&\\p1}m 0 0 l 8 6 l 0 12 m 8 0 l 16 6 l 8 12{\\p0}",
-            x + pad, y + bh / 2 - 6, accent),
-        string.format("{\\an4\\pos(%d,%d)\\bord0\\shad0\\fn%s\\fs%d\\1c&HFFFFFF&}%s",
-            x + pad + 26, y + bh / 2, options.font, fs, text),
-        string.format("{\\an7\\pos(%d,%d)\\bord1\\shad0\\1a&HFF&\\3c&HFFFFFF&\\3a&HB0&\\p1}%s{\\p0}",
-            x + bw - pad - key_w, y + (bh - key_h) / 2, rounded_rect(key_w, key_h, 4)),
-        string.format("{\\an5\\pos(%d,%d)\\bord0\\shad0\\fn%s\\fs11\\1c&HFFFFFF&\\1a&H60&\\fsp1}ENTER",
-            x + bw - pad - key_w / 2, y + bh / 2, options.font),
+        string.format("{\\an7\\pos(%.1f,%.1f)\\bord0\\shad0\\1c&H%s&\\1a&H%s&\\p1}%s{\\p0}",
+            x, y, hovered and "FFFFFF" or "1C1C1C", hovered and "00" or "30", capsule(bw, bh)),
+        string.format("{\\an7\\pos(%.1f,%.1f)\\bord0\\shad0\\1c&H%s&\\p1}m 0 0 l %.1f %.1f l 0 %.1f m %.1f 0 l %.1f %.1f l %.1f %.1f{\\p0}",
+            x + pad, y + (bh - icon) / 2, hovered and "000000" or "FFFFFF",
+            icon * 0.8, icon / 2, icon, icon * 0.8, icon * 1.6, icon / 2, icon * 0.8, icon),
+        string.format("{\\an4\\pos(%.1f,%.1f)\\bord0\\shad0\\fn%s\\fs%.1f\\1c&H%s&}%s",
+            x + pad + icon * 1.6 + 10 * px, y + bh / 2, options.font, fs, hovered and "000000" or "FFFFFF", text),
     }, "\n")
     overlay:update()
+end
+
+local function set_hovered(value)
+    if value == hovered then return end
+    hovered = value
+    if value then
+        mp.add_forced_key_binding("MBTN_LEFT", "chapter-skip-click", function() mp.commandv("add", "chapter", 1) end)
+    else
+        mp.remove_key_binding("chapter-skip-click")
+    end
+    render()
 end
 
 local function hide()
@@ -78,7 +85,8 @@ local function hide()
         hide_timer:kill()
         hide_timer = nil
     end
-    shown_label = nil
+    shown_label, rect = nil, nil
+    set_hovered(false)
     overlay:remove()
     mp.remove_key_binding("chapter-skip-enter")
 end
@@ -95,10 +103,10 @@ local function show(label)
     hide_timer = mp.add_timeout(options.prompt_duration, hide)
 end
 
-local function set_auto(on)
-    options.auto = on
-    mp.commandv("script-message", "set", "auto_skip", on and "yes" or "no")
-end
+mp.observe_property("mouse-pos", "native", function(_, pos)
+    set_hovered(rect ~= nil and pos ~= nil and pos.hover
+        and pos.x >= rect.x and pos.x <= rect.x + rect.w and pos.y >= rect.y and pos.y <= rect.y + rect.h)
+end)
 
 mp.observe_property("chapter", "number", function(_, index)
     hide()
@@ -127,9 +135,6 @@ mp.register_event("start-file", function() auto_skipped = {} end)
 mp.register_event("end-file", hide)
 
 mp.add_key_binding(nil, "toggle-auto", function()
-    set_auto(not options.auto)
+    options.auto = not options.auto
     mp.osd_message("Auto-skip intros & credits " .. (options.auto and "on" or "off"))
-end)
-mp.register_script_message("set", function(prop, value)
-    if prop == "auto_skip" and (value == "yes") ~= options.auto then set_auto(value == "yes") end
 end)
